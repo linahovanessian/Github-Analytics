@@ -1,0 +1,13 @@
+//
+// This file defines the version numbers of dependent libraries used in the build.
+//
+
+// Create the "libver" property in the base project.
+ext.libver = new java.util.Properties()
+
+// Spring framework.
+libver.spring_boot = '2.1.0.RELEASE'
+libver.jackson_annotations = '2.9.7'
+
+
+

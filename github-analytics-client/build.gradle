@@ -1,0 +1,51 @@
+
+group 'com.webbfontaine'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+// Needed for the Spring Boot plugin.
+buildscript {
+    repositories {
+        maven { url "http://repo.spring.io/libs-snapshot" }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${libver.spring_boot}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.springframework.boot'
+
+
+jar{
+    enabled = true
+}
+
+bootJar {
+    baseName = 'github-analytics-client'
+    version =  '0.1.0'
+    from sourceSets.main.output
+}
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile project(":github-analytics-domain")
+    compile "org.springframework.boot:spring-boot-starter"
+    compile("org.springframework:spring-web")
+    compile("com.fasterxml.jackson.core:jackson-databind")
+    compile ("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    // https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-configuration-processor
+    compile ("org.springframework.boot:spring-boot-configuration-processor")
+
+
+    testCompile("junit:junit")
+}

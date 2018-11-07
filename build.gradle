@@ -1,0 +1,26 @@
+defaultTasks 'build'
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+
+}
+
+
+// Loads the various library versions as a project property.
+apply from: 'library-versions.gradle'
+
+/*
+// Load service build properties.
+final Properties serviceVersionProps = new Properties()
+serviceVersionProps.load(new FileInputStream("${projectDir}/service-version.properties"))
+
+*/
+
+// Used by the Gradle wrapper scripts.
+/*task wrapper(type: Wrapper) {
+    gradleVersion = "${libver.gradle}"
+}*/

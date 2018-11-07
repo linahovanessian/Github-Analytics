@@ -1,0 +1,4 @@
+include 'github-analytics-domain'
+include 'github-analytics-service'
+include 'github-analytics-client'
+
