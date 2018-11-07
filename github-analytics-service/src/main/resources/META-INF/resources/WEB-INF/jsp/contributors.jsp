@@ -26,14 +26,11 @@
             <th>ID</th>
             <th>Name</th>
             <th></th>
-            <th>Contributions</th>
+            <th>Commit Count</th>
         </tr>
         </thead>
         <tbody>
-        <%--     private String name;
-             private String id;
-             private String avatarUrl;
-             private long contributions;--%>
+
         <c:choose>
             <c:when test="${empty contributors}">
                 <p>There are no results .</p>
@@ -44,10 +41,11 @@
                     <c:set var="count" value="${count + 1}" scope="page"/>
                     <tr>
                         <td><c:out value="${count}"/></td>
-                        <td><c:out value="${contributor.id}"/></td>
-                        <td><img src="${contributor.avatarUrl}" alt="" border="3" height="100" width="100"/></td>
-                        <td><c:out value="${contributor.name}"/></td>
-                        <td><c:out value="${contributor.contributions}"/></td>
+                        <td><c:out value="${contributor.committer.id}"/></td>
+                        <td><img src="${contributor.committer.avatarUrl}" alt="" border="3" height="100" width="100"/>
+                        </td>
+                        <td><c:out value="${contributor.committer.login}"/></td>
+                        <td><c:out value="${contributor.commitCount}"/></td>
 
                     </tr>
                 </c:forEach>

@@ -1,10 +1,9 @@
 package com.webbfontain.githubanalytics.controller;
 
 import com.webbfontain.githubanalytics.domain.Commit;
-import com.webbfontain.githubanalytics.domain.Contributor;
 import com.webbfontain.githubanalytics.domain.Repository;
+import com.webbfontain.githubanalytics.model.CommitterModel;
 import com.webbfontain.githubanalytics.resource.commit.SearchCommitCommand;
-import com.webbfontain.githubanalytics.resource.contributor.GetContributorsCommand;
 import com.webbfontain.githubanalytics.resource.repository.SearchRepositoryCommand;
 import com.webbfontain.githubanalytics.service.GithubApiClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.groupingBy;
 
 /**
  * @author linahovanessian on 11/6/18.
@@ -54,10 +57,22 @@ public class GithubController {
     public ModelAndView getProjectCommitters(@PathVariable("repoName") String repoName,
                                              @PathVariable("ownerName") String ownerName) {
         ModelAndView model = new ModelAndView( "contributors" );
-        List<Contributor> contributors = githubApiClientService.getProjectContributorList( new GetContributorsCommand(
+       /* List<Contributor> contributors = githubApiClientService.getProjectContributorList( new GetContributorsCommand(
                 ownerName,
                 repoName
-        ) );
+        ) );*/
+        List<Commit> commits = githubApiClientService.getCommits( new SearchCommitCommand( repoName, ownerName ) );
+       /* commits.forEach( commit -> {
+            if(commit.getCommitter() == null)
+                System.out.println(commit.getSha());
+                }
+        );*/
+        List<CommitterModel> contributors = commits.stream().collect(
+                groupingBy( Commit::getCommitter, Collectors.counting() )
+        ).entrySet().stream().map( (e) ->
+                new CommitterModel( e.getKey(), e.getValue() )
+        ).sorted( Comparator.comparingLong( CommitterModel::getCommitCount ).reversed() )
+                .collect( Collectors.toList() );
         model.addObject( "contributors", contributors );
         model.addObject( "repoName", repoName );
         model.addObject( "ownerName", ownerName );

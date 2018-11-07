@@ -23,9 +23,7 @@
         <tr>
             <th>#</th>
             <th>sha</th>
-            <th>Message</th>
             <th>URL</th>
-            <th>Author</th>
             <th>Committer</th>
         </tr>
         </thead>
@@ -42,10 +40,8 @@
                     <tr>
                         <td><c:out value="${count}"/></td>
                         <td><c:out value="${commit.sha}"/></td>
-                        <td><c:out value="${commit.message}"/></td>
                         <td><a target="_blank" href="${commit.url}">${commit.url}</a></td>
-                        <td><c:out value="${commit.authorName}"/></td>
-                        <td><c:out value="${commit.committerName}"/></td>
+                        <td><c:out value="${commit.committer.login}"/></td>
 
 
                     </tr>

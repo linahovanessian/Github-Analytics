@@ -5,13 +5,15 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.webbfontain.githubanalytics.config.GithubConfig;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -38,6 +40,11 @@ public class GithubTemplate implements GithubOperations {
         return restTemplate.getForEntity( githubUrl( path ), responseType );
     }
 
+    @Override
+    public <T> ResponseEntity<T> exchange(String path, HttpMethod method, HttpEntity<?> requestEntity, ParameterizedTypeReference<T> responseType, Object... uriVariables) throws RestClientException {
+        return restTemplate.exchange( githubUrl( path ), method, requestEntity, responseType, uriVariables );
+    }
+
 
     private RestTemplate restTemplate(RestTemplateBuilder restTemplateBuilder) {
         return restTemplateBuilder.basicAuthentication(
@@ -45,7 +52,6 @@ public class GithubTemplate implements GithubOperations {
                 githubConfig.getPassword()
         ).additionalMessageConverters(
                 new MappingJackson2HttpMessageConverter( Jackson2ObjectMapperBuilder.json()
-                        .dateFormat( new SimpleDateFormat( "yyyy-MM-dd" ) )
                         .featuresToEnable( SerializationFeature.WRAP_ROOT_VALUE )
                         .featuresToDisable( SerializationFeature.WRITE_DATES_AS_TIMESTAMPS )
                         .modules(
