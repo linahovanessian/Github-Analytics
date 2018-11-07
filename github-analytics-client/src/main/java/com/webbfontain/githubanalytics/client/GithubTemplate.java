@@ -11,6 +11,7 @@ import org.springframework.http.converter.json.MappingJackson2HttpMessageConvert
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -44,12 +45,12 @@ public class GithubTemplate implements GithubOperations {
                 githubConfig.getPassword()
         ).additionalMessageConverters(
                 new MappingJackson2HttpMessageConverter( Jackson2ObjectMapperBuilder.json()
+                        .dateFormat( new SimpleDateFormat( "yyyy-MM-dd" ) )
                         .featuresToEnable( SerializationFeature.WRAP_ROOT_VALUE )
                         .featuresToDisable( SerializationFeature.WRITE_DATES_AS_TIMESTAMPS )
-
                         .modules(
                                 new JavaTimeModule().addDeserializer( LocalDateTime.class,
-                                        new LocalDateTimeDeserializer( DateTimeFormatter.ISO_DATE_TIME )
+                                        new LocalDateTimeDeserializer( DateTimeFormatter.ISO_DATE )
                                 )
                         ).build() )
         ).build();

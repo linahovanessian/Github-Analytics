@@ -9,18 +9,7 @@ public class SearchCommitCommand {
 
 
     public SearchCommitCommand(String repoName, String ownerName) {
-    /*    StringBuilder path = new StringBuilder( "repos/:owner/:repo/commits" );
-        if ((repoName != null && !repoName.isEmpty()) || (userName != null && !userName.isEmpty())) {
-            path.append( "?q=" );
-            if (repoName != null && userName != null) {
-                path.append( "repo:" ).append( repoName ).append( "&" ).append( "committer:" ).append( userName );
-            } else if (userName != null) {
-                path.append( "repo:" ).append( repoName );
-            } else {
-                path.append( "committer:" ).append( userName );
-            }
-        */
-        String path = new String( "/repos/{ownerName}/{repoName}/commits" );
+        String path = new String( "/repos/{ownerName}/{repoName}/commits?per_page=100&page=1&sha=master" );
         this.command = path.replace( "{ownerName}", ownerName ).replace( "{repoName}", repoName );
     }
 

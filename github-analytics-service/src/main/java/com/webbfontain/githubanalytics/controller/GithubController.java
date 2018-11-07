@@ -1,6 +1,6 @@
 package com.webbfontain.githubanalytics.controller;
 
-import com.webbfontain.githubanalytics.domain.CommitList;
+import com.webbfontain.githubanalytics.domain.Commit;
 import com.webbfontain.githubanalytics.domain.Contributor;
 import com.webbfontain.githubanalytics.domain.Repository;
 import com.webbfontain.githubanalytics.resource.commit.SearchCommitCommand;
@@ -51,22 +51,33 @@ public class GithubController {
 
 
     @GetMapping(path = "/committers/{ownerName}/{repoName}", produces = "application/json")
-    public List<Contributor> getProjectCommitters(@PathVariable("repoName") String repoName,
-                                                  @PathVariable("ownerName") String ownerName) {
-        return githubApiClientService.getProjectContributorList( new GetContributorsCommand( ownerName, repoName
+    public ModelAndView getProjectCommitters(@PathVariable("repoName") String repoName,
+                                             @PathVariable("ownerName") String ownerName) {
+        ModelAndView model = new ModelAndView( "contributors" );
+        List<Contributor> contributors = githubApiClientService.getProjectContributorList( new GetContributorsCommand(
+                ownerName,
+                repoName
         ) );
+        model.addObject( "contributors", contributors );
+        model.addObject( "repoName", repoName );
+        model.addObject( "ownerName", ownerName );
+        return model;
 
     }
 
     @GetMapping(path = "/commits/{repoName}/{ownerName}",
             produces = "application/json")
-    public CommitList getCommits(
+    public ModelAndView getCommits(
 
             @PathVariable("repoName") String repoName,
             @PathVariable("ownerName") String ownerName) {
-
-        return githubApiClientService.getCommits( new SearchCommitCommand( repoName, ownerName
+        ModelAndView model = new ModelAndView( "commits" );
+        List<Commit> commits = githubApiClientService.getCommits( new SearchCommitCommand( repoName, ownerName
         ) );
+        model.addObject( "commits", commits );
+        model.addObject( "repoName", repoName );
+        model.addObject( "ownerName", ownerName );
+        return model;
 
     }
 

@@ -10,9 +10,9 @@ public class SearchRepositoryCommand {
     public SearchRepositoryCommand(String command) {
         StringBuilder path = new StringBuilder( "/search/repositories" );
         if (!command.isEmpty()) {
-            path.append( "?q=" ).append( command ).append( "&per_page=100" );
+            path.append( "?q=" ).append( command ).append( "&per_page=100&page=1" );
         } else
-            path.append( "?per_page=100" );
+            path.append( "?per_page=100&page=1" );
         this.command = path.toString();
     }
 

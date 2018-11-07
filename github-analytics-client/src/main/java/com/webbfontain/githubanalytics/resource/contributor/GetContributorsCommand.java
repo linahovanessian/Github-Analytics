@@ -7,7 +7,7 @@ public class GetContributorsCommand {
     private String command;
 
     public GetContributorsCommand(String ownerName, String repoName) {
-        String path = new String( "/repos/{ownerName}/{repoName}/contributors?per_page=100" );
+        String path = new String( "/repos/{ownerName}/{repoName}/contributors?per_page=100&page=1" );
         this.command = path.replace( "{ownerName}", ownerName ).replace( "{repoName}", repoName );
 
     }

@@ -22,26 +22,38 @@ public class Commit {
     private String authorName;
     @JsonProperty("committerName")
     private String committerName;
-    @JsonProperty("repoName")
-    private String repoName;
+
 
     private String commitDate;
 
 
     @JsonProperty("committer")
     private void unpackCommitterNameFromNestedObject(Map<String, String> committer) {
-        this.committerName = committer.get( "login" );
+        if (committer != null)
+            this.committerName = committer.get( "login" );
+        else
+            this
+                    .committerName = "";
     }
 
     @JsonProperty("author")
+    @JsonInclude(JsonInclude.Include.USE_DEFAULTS)
     private void unpackAuthorNameFromNestedObject(Map<String, String> author) {
-        this.authorName = author.get( "login" );
+        if (author != null)
+            this.authorName = author.get( "login" );
+        else
+            this.authorName = "";
     }
 
     @JsonProperty("commit")
     private void unpackMessageFromNestedObject(Map<String, Object> commit) {
-        this.message = commit.get( "message" ).toString();
-        this.commitDate = ((Map) (commit.get( "committer" ))).get( "date" ).toString();
+        if (commit != null) {
+            this.message = commit.get( "message" ).toString();
+            this.commitDate = ((Map) (commit.get( "committer" ))).get( "date" ).toString();
+        } else {
+            message = "";
+            commitDate = "";
+        }
     }
 
     public String getCommitDate() {
@@ -98,12 +110,5 @@ public class Commit {
         return this;
     }
 
-    public String getRepoName() {
-        return repoName;
-    }
 
-    public Commit setRepoName(String repoName) {
-        this.repoName = repoName;
-        return this;
-    }
 }
