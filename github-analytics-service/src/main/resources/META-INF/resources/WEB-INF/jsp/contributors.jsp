@@ -25,7 +25,6 @@
             <th>#</th>
             <th>ID</th>
             <th>Name</th>
-            <th></th>
             <th>Commit Count</th>
         </tr>
         </thead>
@@ -42,9 +41,9 @@
                     <tr>
                         <td><c:out value="${count}"/></td>
                         <td><c:out value="${contributor.committer.id}"/></td>
-                        <td><img src="${contributor.committer.avatarUrl}" alt="" border="3" height="100" width="100"/>
+                        <td><img src="${contributor.avatar}" alt="" border="3" height="100" width="100"/>
                         </td>
-                        <td><c:out value="${contributor.committer.login}"/></td>
+                        <td><c:out value="${contributor.email}"/></td>
                         <td><c:out value="${contributor.commitCount}"/></td>
 
                     </tr>

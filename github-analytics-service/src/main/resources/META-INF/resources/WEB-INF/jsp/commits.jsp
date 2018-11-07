@@ -41,7 +41,7 @@
                         <td><c:out value="${count}"/></td>
                         <td><c:out value="${commit.sha}"/></td>
                         <td><a target="_blank" href="${commit.url}">${commit.url}</a></td>
-                        <td><c:out value="${commit.committer.login}"/></td>
+                        <td><c:out value="${commit.login}"/></td>
 
 
                     </tr>
