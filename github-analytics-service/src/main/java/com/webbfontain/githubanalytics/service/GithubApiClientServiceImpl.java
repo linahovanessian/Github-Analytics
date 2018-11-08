@@ -3,12 +3,10 @@ package com.webbfontain.githubanalytics.service;
 import com.webbfontain.githubanalytics.domain.CommitList;
 import com.webbfontain.githubanalytics.domain.ContributorList;
 import com.webbfontain.githubanalytics.domain.RepositoryList;
+import com.webbfontain.githubanalytics.resource.Command;
 import com.webbfontain.githubanalytics.resource.commit.CommitService;
-import com.webbfontain.githubanalytics.resource.commit.SearchCommitCommand;
 import com.webbfontain.githubanalytics.resource.contributor.ContributorService;
-import com.webbfontain.githubanalytics.resource.contributor.GetContributorsCommand;
 import com.webbfontain.githubanalytics.resource.repository.RepositoryService;
-import com.webbfontain.githubanalytics.resource.repository.SearchRepositoryCommand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,18 +27,18 @@ public class GithubApiClientServiceImpl implements GithubApiClientService {
 
 
     @Override
-    public RepositoryList searchPublicRepositories(SearchRepositoryCommand searchRepositoryCommand) {
-        return repositoryService.searchPublicRepositories( searchRepositoryCommand );
+    public RepositoryList searchPublicRepositories(Command command) {
+        return repositoryService.searchPublicRepositories( command );
     }
 
     @Override
-    public ContributorList getProjectContributorList(GetContributorsCommand contributorsCommand) {
-        return contributorService.getProjectContributorList( contributorsCommand );
+    public ContributorList getProjectContributorList(Command command) {
+        return contributorService.getProjectContributorList( command );
     }
 
     @Override
-    public CommitList getCommits(SearchCommitCommand searchCommitCommand) {
-        return commitService.getCommits( searchCommitCommand );
+    public CommitList getCommits(Command command) {
+        return commitService.getCommits( command );
     }
 
 

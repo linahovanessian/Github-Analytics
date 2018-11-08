@@ -40,7 +40,10 @@ public class GithubController {
     }
 
     @GetMapping(path = "/repositories", produces = "application/json")
-    public ModelAndView getPublicRepositories(@RequestParam("query") String query) {
+    public ModelAndView getPublicRepositories(@RequestParam(value = "query", required = true) String query) throws Exception {
+        if (query.trim().isEmpty())
+            throw new Exception( "the query string can not be space character only" );
+
         ModelAndView model = new ModelAndView( "repository" );
         List<Repository> repositories = githubApiClientService.searchPublicRepositories( new SearchRepositoryCommand(
                 query ) )
@@ -52,13 +55,9 @@ public class GithubController {
 
 
     @GetMapping(path = "/committers/{ownerName}/{repoName}", produces = "application/json")
-    public ModelAndView getProjectCommitters(@PathVariable("repoName") String repoName,
-                                             @PathVariable("ownerName") String ownerName) {
+    public ModelAndView getProjectCommitters(@PathVariable(value = "repoName", required = true) String repoName,
+                                             @PathVariable(value = "ownerName", required = true) String ownerName) {
         ModelAndView model = new ModelAndView( "contributors" );
-       /* List<Contributor> contributors = githubApiClientService.getProjectContributorList( new GetContributorsCommand(
-                ownerName,
-                repoName
-        ) );*/
 
         List<Commit> commits = githubApiClientService.getCommits( new SearchCommitCommand( repoName, ownerName ) );
         List<CommitterModel> contributors = commits.stream().collect(
@@ -71,14 +70,19 @@ public class GithubController {
         model.addObject( "ownerName", ownerName );
         return model;
 
+         /* List<Contributor> contributors = githubApiClientService.getProjectContributorList( new GetContributorsCommand(
+                ownerName,
+                repoName
+        ) );*/
+
     }
 
     @GetMapping(path = "/commits/{repoName}/{ownerName}",
             produces = "application/json")
     public ModelAndView getCommits(
 
-            @PathVariable("repoName") String repoName,
-            @PathVariable("ownerName") String ownerName) {
+            @PathVariable(value = "repoName", required = true) String repoName,
+            @PathVariable(value = "ownerName", required = true) String ownerName) {
         ModelAndView model = new ModelAndView( "commits" );
         List<Commit> commits = githubApiClientService.getCommits( new SearchCommitCommand( repoName, ownerName
         ) );

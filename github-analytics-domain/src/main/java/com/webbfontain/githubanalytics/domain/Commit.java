@@ -30,7 +30,9 @@ public class Commit {
 
     }
 
-    @JsonProperty("committer")//some of the committers are null !!!!
+    //some of the committers are null !!!!
+    //ToDo Adding this as a workaround ! needs to be better though!
+    @JsonProperty("committer")
     private void unpackCommitterAvatarFromNestedObject(Map<String, Object> committer) {
         if (committer != null) {
             this.avatarUrl = committer.get( "avatar_url" ).toString();

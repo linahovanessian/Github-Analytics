@@ -3,18 +3,16 @@ package com.webbfontain.githubanalytics.service;
 import com.webbfontain.githubanalytics.domain.CommitList;
 import com.webbfontain.githubanalytics.domain.ContributorList;
 import com.webbfontain.githubanalytics.domain.RepositoryList;
-import com.webbfontain.githubanalytics.resource.commit.SearchCommitCommand;
-import com.webbfontain.githubanalytics.resource.contributor.GetContributorsCommand;
-import com.webbfontain.githubanalytics.resource.repository.SearchRepositoryCommand;
+import com.webbfontain.githubanalytics.resource.Command;
 
 /**
  * @author linahovanessian on 11/6/18.
  */
 public interface GithubApiClientService {
 
-    RepositoryList searchPublicRepositories(SearchRepositoryCommand searchRepositoryCommand);
+    RepositoryList searchPublicRepositories(Command command);
 
-    ContributorList getProjectContributorList(GetContributorsCommand contributorsCommand);
+    ContributorList getProjectContributorList(Command command);
 
-    CommitList getCommits(SearchCommitCommand searchCommitCommand);
+    CommitList getCommits(Command command);
 }

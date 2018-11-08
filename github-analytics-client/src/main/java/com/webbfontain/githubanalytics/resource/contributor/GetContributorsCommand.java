@@ -1,9 +1,11 @@
 package com.webbfontain.githubanalytics.resource.contributor;
 
+import com.webbfontain.githubanalytics.resource.Command;
+
 /**
  * @author linahovanessian on 11/6/18.
  */
-public class GetContributorsCommand {
+public class GetContributorsCommand implements Command {
     private String command;
 
     public GetContributorsCommand(String ownerName, String repoName) {
@@ -12,6 +14,7 @@ public class GetContributorsCommand {
 
     }
 
+    @Override
     public String getCommand() {
         return command;
     }
