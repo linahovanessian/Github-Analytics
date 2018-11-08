@@ -1,9 +1,11 @@
 package com.webbfontain.githubanalytics.controller;
 
 import com.webbfontain.githubanalytics.domain.Commit;
+import com.webbfontain.githubanalytics.domain.Contributor;
 import com.webbfontain.githubanalytics.domain.Repository;
 import com.webbfontain.githubanalytics.model.CommitterModel;
 import com.webbfontain.githubanalytics.resource.commit.SearchCommitCommand;
+import com.webbfontain.githubanalytics.resource.contributor.GetContributorsCommand;
 import com.webbfontain.githubanalytics.resource.repository.SearchRepositoryCommand;
 import com.webbfontain.githubanalytics.service.GithubApiClientService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,20 +62,26 @@ public class GithubController {
         ModelAndView model = new ModelAndView( "contributors" );
 
         List<Commit> commits = githubApiClientService.getCommits( new SearchCommitCommand( repoName, ownerName ) );
-        List<CommitterModel> contributors = commits.stream().collect(
+        List<CommitterModel> activeContributors = commits.stream().collect(
                 groupingBy( Commit::getLoginAvatar, Collectors.counting() )
         ).entrySet().stream().map( (e) -> new CommitterModel( e.getKey(), e.getValue() )
         ).sorted( Comparator.comparingLong( CommitterModel::getCommitCount ).reversed() )
                 .collect( Collectors.toList() );
+
+
+        List<Contributor> contributors = githubApiClientService.getProjectContributorList( new GetContributorsCommand(
+                ownerName,
+                repoName
+        ) );
+
+        model.addObject( "activeContributors", activeContributors );
         model.addObject( "contributors", contributors );
         model.addObject( "repoName", repoName );
         model.addObject( "ownerName", ownerName );
+
+
         return model;
 
-         /* List<Contributor> contributors = githubApiClientService.getProjectContributorList( new GetContributorsCommand(
-                ownerName,
-                repoName
-        ) );*/
 
     }
 

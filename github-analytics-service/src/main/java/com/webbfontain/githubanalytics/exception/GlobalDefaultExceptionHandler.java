@@ -26,6 +26,7 @@ public class GlobalDefaultExceptionHandler {
 
         ModelAndView mav = new ModelAndView();
         mav.addObject( "exceptionMessage", e.getMessage() );
+        mav.addObject( "exception", e );
         mav.addObject( "url", req.getRequestURL() );
         mav.setViewName( DEFAULT_ERROR_VIEW );
         return mav;

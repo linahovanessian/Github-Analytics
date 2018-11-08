@@ -24,10 +24,52 @@
 </head>
 <body>
 
-<div class="container">
-    <h2>${repoName} Repository</h2>
-    <p><a href="/github/commits/${repoName}/${ownerName}">Jump to latest 100 commits !</a></p>
 
+<div class="container">
+    <h2>${repoName} Repository Contributors</h2>
+    <p><b><a href="/github/commits/${repoName}/${ownerName}">Jump to latest 100 commits !</a></b></p>
+    <table class="table table-hover">
+        <thead>
+
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th></th>
+            <th>Contribution Count</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <c:choose>
+            <c:when test="${empty contributors}">
+                <p>There are no results .</p>
+            </c:when>
+            <c:otherwise>
+                <c:set var="count" value="0" scope="page"/>
+                <c:forEach items="${contributors}" var="contributors">
+                    <c:set var="count" value="${count + 1}" scope="page"/>
+                    <tr>
+                        <td><c:out value="${count}"/></td>
+                        <td><c:out value="${contributors.name}"/></td>
+                        <td>
+                            <div><img style="border-radius: 50%;" src="${contributors.avatarUrl}" alt=""
+                                      height="50"
+                                      width="50"/></div>
+                        </td>
+                        <td><c:out value="${contributors.contributions}"/></td>
+
+                    </tr>
+                </c:forEach>
+            </c:otherwise>
+        </c:choose>
+
+
+        </tbody>
+    </table>
+</div>
+
+
+<h1>Contributors for the last 100 Commit</h1>
     <table class="table table-hover">
         <thead>
 
@@ -41,22 +83,23 @@
         <tbody>
 
         <c:choose>
-            <c:when test="${empty contributors}">
+            <c:when test="${empty activeContributors}">
                 <p>There are no results .</p>
             </c:when>
             <c:otherwise>
                 <c:set var="count" value="0" scope="page"/>
-                <c:forEach items="${contributors}" var="contributor">
+                <c:forEach items="${activeContributors}" var="activeContributors">
                     <c:set var="count" value="${count + 1}" scope="page"/>
                     <tr>
                         <td><c:out value="${count}"/></td>
-                        <td><c:out value="${contributor.login}"/></td>
+                        <td><c:out value="${activeContributors.login}"/></td>
                         <td>
-                            <div id="rcorners1"><img style="border-radius: 50%;" src="${contributor.avatar}" alt=""
+                            <div id="rcorners1"><img style="border-radius: 50%;" src="${activeContributors.avatar}"
+                                                     alt=""
                                                      height="100"
                                                      width="100"/></div>
                         </td>
-                        <td><c:out value="${contributor.commitCount}"/></td>
+                        <td><c:out value="${activeContributors.commitCount}"/></td>
 
                     </tr>
                 </c:forEach>

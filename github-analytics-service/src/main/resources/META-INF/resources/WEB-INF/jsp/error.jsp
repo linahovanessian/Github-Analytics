@@ -20,6 +20,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12 text-center">
                 <span class="display-1 d-block">OOPS!</span>
+                <div class="mb-4 lead">${exception}</div>
                 <div class="mb-4 lead">${exceptionMessage}</div>
                 <a href="/github" class="btn btn-link">Back to Home</a>
             </div>
