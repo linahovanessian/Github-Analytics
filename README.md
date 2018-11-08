@@ -13,7 +13,7 @@ Users can :
 For some reasons , the jar packaging is not being correctly. So for now ,if you want to see the demo please clone and
  import this as a gradle project. 
  * In github-analytics-service/src/main/resources/application.properties set your github username and password.
- * Then using the gradle plugin of your IDE:
+ * Then using the gradle plugin of your IDE(4.10.2 or later):
 ```bash
 clean  build
 ```
