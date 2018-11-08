@@ -34,9 +34,7 @@ public class GithubController {
 
     @RequestMapping("")
     public ModelAndView welcome() {
-        ModelAndView model = new ModelAndView( "home" );
-        model.addObject( "message", "Hello Lina" );
-
+        ModelAndView model = new ModelAndView( "search" );
         return model;
 
     }
