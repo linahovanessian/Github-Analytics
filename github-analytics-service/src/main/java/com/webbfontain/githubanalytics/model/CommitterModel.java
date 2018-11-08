@@ -1,35 +1,22 @@
 package com.webbfontain.githubanalytics.model;
 
-import com.webbfontain.githubanalytics.domain.Committer;
-
 /**
  * @author linahovanessian on 11/7/18.
  */
 public class CommitterModel {
 
-    private Committer committer;
     private long commitCount;
-    private String email;
+    private String loginAvatar;
+
+    private String login;
     private String avatar;
 
 
-    public CommitterModel(Committer committer, long commitCount) {
-        this.committer = committer;
+    public CommitterModel(String loginAvatar, long commitCount) {
+        String[] arr = loginAvatar.split( "#" );
+        this.login = arr[0];
+        this.avatar = arr[1];
         this.commitCount = commitCount;
-    }
-
-    public CommitterModel(String avatar, long commitCount) {
-        this.commitCount = commitCount;
-        this.avatar = avatar;
-    }
-
-    public Committer getCommitter() {
-        return committer;
-    }
-
-    public CommitterModel setCommitter(Committer committer) {
-        this.committer = committer;
-        return this;
     }
 
     public long getCommitCount() {
@@ -41,21 +28,12 @@ public class CommitterModel {
         return this;
     }
 
-    public String getEmail() {
-        return email;
-    }
 
-    public CommitterModel setEmail(String email) {
-        this.email = email;
-        return this;
+    public String getLogin() {
+        return login;
     }
 
     public String getAvatar() {
         return avatar;
-    }
-
-    public CommitterModel setAvatar(String avatar) {
-        this.avatar = avatar;
-        return this;
     }
 }

@@ -63,15 +63,9 @@ public class GithubController {
         ) );*/
 
         List<Commit> commits = githubApiClientService.getCommits( new SearchCommitCommand( repoName, ownerName ) );
-       /* commits.forEach( commit -> {
-            if(commit.getCommitter() == null)
-                System.out.println(commit.getSha());
-                }
-        );*/
         List<CommitterModel> contributors = commits.stream().collect(
-                groupingBy( Commit::getAvatarUrl, Collectors.counting() )
-        ).entrySet().stream().map( (e) ->
-                new CommitterModel( e.getKey(), e.getValue() )
+                groupingBy( Commit::getLoginAvatar, Collectors.counting() )
+        ).entrySet().stream().map( (e) -> new CommitterModel( e.getKey(), e.getValue() )
         ).sorted( Comparator.comparingLong( CommitterModel::getCommitCount ).reversed() )
                 .collect( Collectors.toList() );
         model.addObject( "contributors", contributors );

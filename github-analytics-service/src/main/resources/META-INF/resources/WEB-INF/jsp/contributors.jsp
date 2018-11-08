@@ -24,7 +24,7 @@
         <tr>
             <th>#</th>
             <th>ID</th>
-            <th>Name</th>
+            <th></th>
             <th>Commit Count</th>
         </tr>
         </thead>
@@ -40,10 +40,9 @@
                     <c:set var="count" value="${count + 1}" scope="page"/>
                     <tr>
                         <td><c:out value="${count}"/></td>
-                        <td><c:out value="${contributor.committer.id}"/></td>
+                        <td><c:out value="${contributor.login}"/></td>
                         <td><img src="${contributor.avatar}" alt="" border="3" height="100" width="100"/>
                         </td>
-                        <td><c:out value="${contributor.email}"/></td>
                         <td><c:out value="${contributor.commitCount}"/></td>
 
                     </tr>

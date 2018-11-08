@@ -20,12 +20,9 @@ public class Commit {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private Committer committer;
 
-    private String email;
-
-    private String login;
-
-
-    private String avatarUrl;
+    private String email = "N/A";
+    private String login = "N/A";
+    private String avatarUrl = "N/A";
 
     @JsonProperty("commit")
     private void unpackCommitterNameFromNestedObject(Map<String, Object> commit) {
@@ -34,13 +31,10 @@ public class Commit {
     }
 
     @JsonProperty("committer")//some of the committers are null !!!!
-    private void unpackCommitterAvatarFromNestedObject(Map<String, Object> commit) {
-        if (commit != null) {
-            this.avatarUrl = commit.get( "avatar_url" ).toString();
-            this.login = commit.get( "login" ).toString();
-        } else {
-            this.avatarUrl = "N/A";
-            this.login = "N/A";
+    private void unpackCommitterAvatarFromNestedObject(Map<String, Object> committer) {
+        if (committer != null) {
+            this.avatarUrl = committer.get( "avatar_url" ).toString();
+            this.login = committer.get( "login" ).toString();
         }
 
     }
@@ -103,5 +97,8 @@ public class Commit {
         return this;
     }
 
+    public String getLoginAvatar() {
+        return this.login + "#" + this.avatarUrl;
+    }
 
 }
